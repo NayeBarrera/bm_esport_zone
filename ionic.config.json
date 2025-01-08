@@ -1,0 +1,7 @@
+{
+  "name": "bm_esport_zone",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
