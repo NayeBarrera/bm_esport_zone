@@ -1,0 +1,134 @@
+<ion-content class="relative bg-gradient-to-b from-black to-gray-900">
+  <div class="min-h-screen flex items-center justify-center p-6">
+    <div class="w-full max-w-md space-y-8 relative">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h1 class="text-3xl font-bold text-white tracking-tight">
+          REGÍSTRATE
+          <span class="block text-xl font-medium mt-2 text-purple-400">BM eSports Zone</span>
+        </h1>
+      </div>
+
+      <!-- Register Form -->
+      <form [formGroup]="registerForm" (ngSubmit)="register()" class="space-y-6">
+        <!-- Nombre -->
+        <ion-item class="rounded-lg bg-white/5 border border-purple-500/30" lines="none">
+          <ion-label position="floating" class="text-purple-300">
+            <ion-icon name="person-outline" class="mr-2"></ion-icon>
+            Nombre
+          </ion-label>
+          <ion-input 
+            type="text" 
+            formControlName="nombre"
+            class="text-white"
+          ></ion-input>
+        </ion-item>
+        <div *ngIf="f['nombre'].touched && f['nombre'].invalid" 
+             class="text-purple-400 text-sm mt-1 text-center">
+          Nombre es requerido
+        </div>
+
+        <!-- Apellido -->
+        <ion-item class="rounded-lg bg-white/5 border border-purple-500/30" lines="none">
+          <ion-label position="floating" class="text-purple-300">
+            <ion-icon name="person-outline" class="mr-2"></ion-icon>
+            Apellido
+          </ion-label>
+          <ion-input 
+            type="text" 
+            formControlName="apellido"
+            class="text-white"
+          ></ion-input>
+        </ion-item>
+        <div *ngIf="f['apellido'].touched && f['apellido'].invalid" 
+             class="text-purple-400 text-sm mt-1 text-center">
+          Apellido es requerido
+        </div>
+
+        <!-- Correo -->
+        <ion-item class="rounded-lg bg-white/5 border border-purple-500/30" lines="none">
+          <ion-label position="floating" class="text-purple-300">
+            <ion-icon name="mail-outline" class="mr-2"></ion-icon>
+            Correo
+          </ion-label>
+          <ion-input 
+            type="email" 
+            formControlName="correo"
+            class="text-white"
+          ></ion-input>
+        </ion-item>
+        <div *ngIf="f['correo'].touched && f['correo'].invalid" 
+             class="text-purple-400 text-sm mt-1 text-center">
+          Correo es requerido y debe ser válido
+        </div>
+
+        <!-- Teléfono -->
+        <ion-item class="rounded-lg bg-white/5 border border-purple-500/30" lines="none">
+          <ion-label position="floating" class="text-purple-300">
+            <ion-icon name="call-outline" class="mr-2"></ion-icon>
+            Teléfono
+          </ion-label>
+          <ion-input 
+            type="tel" 
+            formControlName="telefono"
+            class="text-white"
+          ></ion-input>
+        </ion-item>
+        <div *ngIf="f['telefono'].touched && f['telefono'].invalid" 
+             class="text-purple-400 text-sm mt-1 text-center">
+          Teléfono es requerido
+        </div>
+
+        <!-- Contraseña -->
+        <ion-item class="rounded-lg bg-white/5 border border-purple-500/30" lines="none">
+          <ion-label position="floating" class="text-purple-300">
+            <ion-icon name="lock-closed-outline" class="mr-2"></ion-icon>
+            Contraseña
+          </ion-label>
+          <ion-input 
+            type="password" 
+            formControlName="password"
+            class="text-white"
+          ></ion-input>
+        </ion-item>
+        <div *ngIf="f['password'].touched && f['password'].invalid" 
+             class="text-purple-400 text-sm mt-1 text-center">
+          Contraseña es requerida y debe tener al menos 6 caracteres
+        </div>
+
+        <!-- Confirmar Contraseña -->
+        <ion-item class="rounded-lg bg-white/5 border border-purple-500/30" lines="none">
+          <ion-label position="floating" class="text-purple-300">
+            <ion-icon name="lock-closed-outline" class="mr-2"></ion-icon>
+            Confirmar Contraseña
+          </ion-label>
+          <ion-input 
+            type="password" 
+            formControlName="confirmPassword"
+            class="text-white"
+          ></ion-input>
+        </ion-item>
+        <div *ngIf="f['confirmPassword'].touched && f['confirmPassword'].invalid" 
+             class="text-purple-400 text-sm mt-1 text-center">
+          Debe confirmar la contraseña
+        </div>
+
+        <!-- Botón Registrarse -->
+        <ion-button expand="block" type="submit" 
+                    class="h-12 font-medium tracking-wide"
+                    [ngClass]="{'opacity-50': registerForm.invalid}"
+                    color="primary">
+          Registrarse
+        </ion-button>
+
+        <!-- Botón Cancelar -->
+        <ion-button expand="block" 
+                    class="h-12 font-medium tracking-wide"
+                    fill="outline"
+                    color="light">
+          Cancelar
+        </ion-button>
+      </form>
+    </div>
+  </div>
+</ion-content>

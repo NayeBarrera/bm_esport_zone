@@ -1,0 +1,48 @@
+<ion-content class="bg-black">
+  <div class="min-h-screen flex flex-col items-center justify-center p-6 space-y-8">
+    <!-- Logo y Bienvenida -->
+    <div class="text-center">
+    
+      <img src="assets/logo.png" alt="Logo BM" class="w-24 h-24 mx-auto mb-4 rounded-full object-cover" />
+      <h1 class="text-white text-2xl font-bold">
+        HOLA, BIENVENIDO/A
+        <br />
+        <span class="text-purple-400">BM eSports Zone</span>
+      </h1>
+    </div>
+
+   <!-- Botones de Zona -->
+<div class="space-y-4 w-full max-w-md">
+  <!-- BM PostresZone -->
+  <ion-button id="open-postres-modal" 
+              expand="block" 
+              class="rounded-lg h-16 text-lg font-medium bg-purple-500"
+              (click)="showPostresZoneInfo()">
+    <ion-icon name="cafe-outline" slot="start" class="text-2xl"></ion-icon>
+    BM PostresZone
+  </ion-button>
+
+  <!-- BM eSportsZone -->
+  <ion-button id="open-esports-modal" 
+              expand="block" 
+              class="rounded-lg h-16 text-lg font-medium bg-purple-500"
+              (click)="showEsportsZoneInfo()">
+    <ion-icon name="game-controller-outline" slot="start" class="text-2xl"></ion-icon>
+    BM eSportsZone
+  </ion-button>
+</div>
+
+    <!-- Mensaje y Botón Ingresar -->
+    <div class="text-center w-full max-w-md mt-6">
+      <p class="text-white text-lg font-medium mb-4">
+        Ingresa para disfrutar de nuestros productos, beneficios y mucho más.
+      </p>
+      <ion-button expand="block" 
+              class="rounded-lg h-16 text-lg font-medium bg-green-500"
+              (click)="goToLogin()">
+            Ingresar
+      </ion-button>
+    </div>
+  </div>
+
+  

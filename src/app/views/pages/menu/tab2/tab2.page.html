@@ -1,0 +1,96 @@
+<!-- tab2.page.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Reservar PC</ion-title>
+    <ion-buttons slot="start" *ngIf="currentScreen > 1">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ <!-- Pantalla 1: Selección de PC -->
+ <div *ngIf="currentScreen === 1" class="ion-padding">
+  <h2>Selecciona un PC</h2>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4" *ngFor="let pc of pcs">
+        <ion-button expand="block" class="pc-button"
+                    [color]="{'--background': pc.reserved ? 'var( #9370DB)' : '#9370DB'}"
+                    [disabled]="pc.reserved"
+                    (click)="handlePCSelect(pc.id)">
+          <div class="pc-content">
+            <ion-icon name="desktop-outline" size="large"></ion-icon>
+            <div>{{pc.id}}</div>
+          </div>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
+
+  <!-- Pantalla 2: Calendario -->
+  <div *ngIf="currentScreen === 2" class="calendar-container ion-padding">
+    <h2>Selecciona una fecha</h2>
+    
+    <div class="calendar-header">
+      <ion-button fill="clear" (click)="changeMonth(-1)">
+        <ion-icon name="chevron-back"></ion-icon>
+      </ion-button>
+      <h3>{{currentMonth | date:'MMMM yyyy'}}</h3>
+      <ion-button fill="clear" (click)="changeMonth(1)">
+        <ion-icon name="chevron-forward"></ion-icon>
+      </ion-button>
+    </div>
+
+    <ion-grid class="calendar-grid">
+      <ion-row>
+        <ion-col size="1.7" *ngFor="let day of daysOfWeek" class="day-header">
+          {{day}}
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngFor="let week of weeks">
+        <ion-col size="1.7" 
+                 *ngFor="let day of week" 
+                 [class.selected]="selectedDate === day.date"
+                 [class.disabled]="!isValidDate(day.date)"
+                 (click)="handleDateSelect(day.date)">
+          {{day.date ? day.date.getDate() : ''}}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- Pantalla 3: Selección de hora -->
+  <div *ngIf="currentScreen === 3" class="ion-padding">
+    <h2>Selecciona una hora</h2>
+    <ion-list>
+      <ion-item *ngFor="let slot of timeSlots" button (click)="handleTimeSelect(slot.time)">
+        <ion-label>{{slot.time}}</ion-label>
+        <ion-note slot="end" color="success" *ngIf="slot.available">
+          Disponible
+        </ion-note>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <!-- Pantalla 4: Confirmación -->
+  <div *ngIf="currentScreen === 4" class="ion-padding">
+    <h2>Confirmar Reserva</h2>
+    <ion-card>
+      <ion-card-content>
+        <p><strong>PC:</strong> {{selectedPC}}</p>
+        <p><strong>Fecha:</strong> {{formatDate(selectedDate)}}</p>
+        <p><strong>Hora:</strong> {{selectedTime}}</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-button expand="block" 
+              style="--background: #9370DB;"
+              (click)="confirmReservation()">
+    CONFIRMAR RESERVA
+  </ion-button>
+</div>
+</ion-content>

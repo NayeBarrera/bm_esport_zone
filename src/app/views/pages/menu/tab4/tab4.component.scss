@@ -1,0 +1,47 @@
+/* tab4.component.scss */
+.zones-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 1rem;
+    
+    ion-card {
+      width: 45%;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s;
+  
+      &:hover {
+        transform: scale(1.02);
+      }
+  
+      &.selected {
+        border: 2px solid var(--ion-color-primary);
+      }
+    }
+  }
+  
+  .promociones-container {
+    padding: 1rem;
+  
+    .promocion-card {
+      width: 100%;
+      margin-bottom: 1rem;
+  
+      ion-card-header {
+        background-color: var(--ion-color-light);
+      }
+  
+      .vigencia {
+        font-size: 0.9em;
+        color: var(--ion-color-medium);
+        margin-top: 1rem;
+      }
+  
+      .qr-code {
+        display: block;
+        margin: 1rem auto;
+        width: 150px;
+        height: 150px;
+      }
+    }
+  }

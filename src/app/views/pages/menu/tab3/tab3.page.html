@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>MENU</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="menu-container">
+    <!-- Grid de productos -->
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" *ngFor="let postre of postres">
+          <ion-card>
+            <img [src]="postre.imagen" alt="{{postre.nombre}}"/>
+            <ion-card-header>
+              <ion-card-title>{{postre.nombre}}</ion-card-title>
+              <ion-card-subtitle>{{postre.descripcion}}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <div class="precio-container">
+                <span class="precio">${{postre.precio}}</span>
+                <ion-button fill="clear" (click)="agregarAlCarrito(postre)">
+                  <ion-icon name="add"></ion-icon>
+                </ion-button>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- Footer con carrito -->
+  <ion-footer class="carrito-footer" *ngIf="carrito.length > 0">
+    <ion-toolbar>
+      <ion-row>
+        <ion-col size="8">
+          <p>Total: ${{calcularTotal()}}</p>
+        </ion-col>
+        <ion-col size="4">
+          <ion-button expand="block" (click)="irAResumen()">
+            Pagar
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>
+
+<!-- Mantén tu HTML existente y añade esto al final -->
+<div class="factura-container" *ngIf="mostrarFactura && factura">
+  <div class="factura" id="factura-imprimir">
+    <h2>FACTURA</h2>
+    <div class="factura-header">
+      <p><strong>Nº Factura:</strong> {{factura.numeroFactura}}</p>
+      <p><strong>Fecha:</strong> {{factura.fecha | date:'dd/MM/yyyy HH:mm'}}</p>
+    </div>
+
+    <div class="cliente-info">
+      <h3>Datos del Cliente</h3>
+      <p><strong>Nombre:</strong> {{factura.cliente.nombre}}</p>
+      <p><strong>Email:</strong> {{factura.cliente.email}}</p>
+    </div>
+
+    <div class="items">
+      <h3>Detalle de Compra</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of factura.items">
+            <td>{{item.nombre}}</td>
+            <td>${{item.precio}}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td><strong>Total</strong></td>
+            <td><strong>${{factura.total}}</strong></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="metodo-pago">
+      <p><strong>Método de Pago:</strong> {{factura.metodoPago}}</p>
+    </div>
+  </div>
+
+  <ion-button expand="block" (click)="imprimirFactura()">
+    Imprimir Factura
+  </ion-button>
+</div>

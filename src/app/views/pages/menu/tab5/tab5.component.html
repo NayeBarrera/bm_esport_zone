@@ -1,0 +1,121 @@
+<!-- tab5.component.html -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <div class="profile-header">
+        <img src="assets/logo.png" alt="Logo BM" class="w-24 h-24 mx-auto mb-4 rounded-full object-cover" />
+        <span class="version">Versión 1</span>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Encabezado de Usuario -->
+  <div class="user-header">
+    <ion-avatar>
+      <img src="assets/perfil.png" alt="User Profile">
+    </ion-avatar>
+    <div class="user-info">
+      <h2>HOLA, {{usuario.nombre}}!</h2>
+      <p>{{usuario.email}}</p>
+    </div>
+  </div>
+
+  <div class="cuenta-label">Cuenta</div>
+
+  <!-- Menú de Opciones -->
+  <ion-list>
+    <ion-item (click)="verSeccion('pedidos')" button>
+      <ion-icon name="receipt-outline" slot="start"></ion-icon>
+      <ion-label>Pedidos</ion-label>
+    </ion-item>
+
+    <ion-item (click)="verSeccion('facturacion')" button>
+      <ion-icon name="document-text-outline" slot="start"></ion-icon>
+      <ion-label>Datos de facturación</ion-label>
+    </ion-item>
+
+    <ion-item (click)="verSeccion('direccion')" button>
+      <ion-icon name="location-outline" slot="start"></ion-icon>
+      <ion-label>Dirección de entrega</ion-label>
+    </ion-item>
+
+    <ion-item (click)="verSeccion('notificaciones')" button>
+      <ion-icon name="notifications-outline" slot="start"></ion-icon>
+      <ion-label>Notificaciones</ion-label>
+    </ion-item>
+
+    <ion-item (click)="verSeccion('editar')" button>
+      <ion-icon name="create-outline" slot="start"></ion-icon>
+      <ion-label>Editar perfil</ion-label>
+    </ion-item>
+
+    <ion-item (click)="cerrarSesion()" button>
+      <ion-icon name="log-out-outline" slot="start"></ion-icon>
+      <ion-label>Cerrar Sesión</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Sección de Editar Perfil -->
+  <div *ngIf="seccionActual === 'editar'" class="seccion-contenido">
+    <h3>Editar Perfil</h3>
+    <form>
+      <ion-list>
+        <ion-item>
+          <ion-label position="floating">Nombre</ion-label>
+          <ion-input
+            type="text"
+            [value]="usuario.nombre"
+            (ionInput)="handleInput($event, 'nombre')"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Apellido</ion-label>
+          <ion-input
+            type="text"
+            [value]="usuario.apellido"
+            (ionInput)="handleInput($event, 'apellido')"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Teléfono</ion-label>
+          <ion-input
+            type="tel"
+            [value]="usuario.telefono"
+            (ionInput)="handleInput($event, 'telefono')"
+          ></ion-input>
+        </ion-item>
+
+        <div class="social-login">
+          <h4>Conectar con redes sociales</h4>
+          <ion-button expand="block" color="primary">
+            <ion-icon name="logo-google" slot="start"></ion-icon>
+            Conectar con Google
+          </ion-button>
+          <ion-button expand="block" color="facebook">
+            <ion-icon name="logo-facebook" slot="start"></ion-icon>
+            Conectar con Facebook
+          </ion-button>
+        </div>
+
+        <div class="danger-zone">
+          <ion-button color="danger" expand="block" (click)="eliminarCuenta()">
+            Eliminar cuenta
+          </ion-button>
+        </div>
+
+        <div class="action-buttons">
+          <ion-button color="medium" (click)="cancelarEdicion()">
+            Cancelar
+          </ion-button>
+          <ion-button color="primary" (click)="guardarCambios()">
+            Guardar cambios
+          </ion-button>
+        </div>
+      </ion-list>
+    </form>
+  </div>
+</ion-content>

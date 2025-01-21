@@ -1,0 +1,79 @@
+/* tab2.page.scss */
+:root {
+  --ion-color-primary: #9370DB;
+  --ion-color-primary-rgb: 147, 112, 219;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #8162c1;
+  --ion-color-primary-tint: #B19CD9;
+}
+
+.calendar-container {
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h3 {
+      margin: 0;
+      text-transform: capitalize;
+    }
+  }
+
+  .calendar-grid {
+    .day-header {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    ion-col {
+      text-align: center;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      
+      &.disabled {
+        color: #9370DB;
+        pointer-events: none;
+      }
+
+      &.selected {
+        background-color: #9370DB;
+        color: white;
+      }
+
+      &:not(.disabled):hover {
+        background-color: #B19CD9;
+        color: white;
+      }
+    }
+  }
+}
+
+ion-button {
+  --background: #9370DB !important;
+  
+  &[disabled] {
+    --background: var(--ion-color-medium) !important;
+  }
+}
+
+.pc-button {
+  height: 100px;
+  
+  &:hover:not([disabled]) {
+    --background: #B19CD9 !important;
+  }
+}
+
+ion-content {
+  --padding-top: 20px;
+}
+
+h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: 600;
+}

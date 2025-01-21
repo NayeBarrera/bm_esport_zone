@@ -1,0 +1,28 @@
+.bg-black {
+  --background: black;
+}
+
+ion-modal {
+  --height: auto;
+  --width: 90%;
+  --border-radius: 16px;
+  --background: white;
+}
+
+ion-button {
+  --background: #9056c7;
+  --background-activated: #9056c7;
+  --color: white;
+}
+
+.custom-button {
+  --background: #9370DB;
+  margin-bottom: 15px;
+  height: 50px;
+  
+  &:hover {
+    --background: #B19CD9;
+  }
+
+ 
+}

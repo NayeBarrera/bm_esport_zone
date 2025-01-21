@@ -1,0 +1,41 @@
+:host {
+    --ion-color-primary: theme('colors.purple.500');
+    --ion-color-primary-contrast: #ffffff;
+    --ion-color-primary-shade: theme('colors.purple.600');
+    --ion-color-primary-tint: theme('colors.purple.400');
+  }
+  
+  ion-item {
+    --background: transparent;
+    --border-color: transparent;
+    --highlight-height: 0;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    margin-bottom: 16px;
+  }
+  
+  ion-item.item-has-focus {
+    --border-color: theme('colors.purple.400');
+  }
+  
+  ion-input {
+    --padding-start: 8px;
+    --padding-end: 8px;
+    --placeholder-color: theme('colors.gray.400');
+  }
+  
+  ion-button.social-button {
+    --padding-start: 12px;
+    --padding-end: 12px;
+    --box-shadow: none;
+  }
+  
+  ion-button {
+    --border-radius: 8px;
+  }
+  
+  ion-button[color="light"] {
+    --ion-color-base: transparent;
+    --ion-color-contrast: theme('colors.white');
+    --border-color: theme('colors.purple.500');
+  }
