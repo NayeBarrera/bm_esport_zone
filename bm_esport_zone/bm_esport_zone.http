@@ -1,0 +1,6 @@
+@bm_esport_zone_HostAddress = http://localhost:5123
+
+GET {{bm_esport_zone_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
