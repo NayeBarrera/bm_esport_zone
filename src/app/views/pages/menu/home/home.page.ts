@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { Persona, Producto } from 'src/app/models/entities/Entidades';
+import { personasService } from 'src/app/views/shared/services/personas.service';
+import { ProductosService } from 'src/app/views/shared/services/productos.service';
 
 interface Postre {
   id: number;
@@ -23,8 +26,8 @@ interface Factura {
 
 @Component({
   selector: 'app-tab3',
-  templateUrl: './tab3.page.html',
-  styleUrls: ['./tab3.page.scss'],
+  templateUrl: 'home.page.html',//tab3.page.html',
+  styleUrls: ['./home.page.scss'],
 })
 export class Tab3Page implements OnInit {
   postres: Postre[] = [
@@ -78,7 +81,8 @@ export class Tab3Page implements OnInit {
       imagen: 'assets/Gelatina_mosaico.jpg'
     }
   ];
-
+  productos: Producto[] = [];
+  // personas: Persona [] = [];
   carrito: Postre[] = [];
   factura: Factura | null = null;
   mostrarFactura = false;
@@ -90,9 +94,35 @@ export class Tab3Page implements OnInit {
   mostrarCheckout = false;
   mostrarConfirmacion = false;
 
-  constructor(private navCtrl: NavController) {}
+  constructor(
+    private navCtrl: NavController,
+    private readonly productosservices: ProductosService,
+    // private readonly personasService: personasServicex
+  ) {}
 
   ngOnInit() {
+    this.cargarproductos();
+    // this.cargarPersonas();
+  }
+
+  // cargarPersonas(){
+  //   this.personasService.getPersona().subscribe({
+  //   next: (response) => {
+  //     this.personas = response.data.data;
+  //     console.log("Personas",this.personas)
+  //   },
+  //   error: (error) => console.error('Error al cargar Personas:', error)
+  // });
+  // }
+
+  cargarproductos(){
+    this.productosservices.getProdcutos().subscribe({
+      next: (response) => {
+        this.productos = response.data.data;
+        console.log("Prodcutos",this.productos)
+      },
+      error: (error) => console.error('Error al cargar productos:', error)
+    });
   }
 
   agregarAlCarrito(postre: Postre) {

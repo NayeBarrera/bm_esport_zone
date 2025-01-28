@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, NavController } from '@ionic/angular';
+import { SetPersonasCommand, SetUsuarioCommand } from 'src/app/models/entities/Entidades';
+import { RegisterService } from '../../services/register.service';
 
 @Component({
   selector: 'app-register',
@@ -14,24 +15,41 @@ export class RegisterPage implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private toastController: ToastController,
     private alertController: AlertController,
-    private navCtrl: NavController
-  ) {
-    // Inicialización del formulario reactivo
-    this.registerForm = this.fb.group({
-      nombre: ['', [Validators.required, Validators.minLength(2)]],
-      apellido: ['', [Validators.required, Validators.minLength(2)]],
-      correo: ['', [Validators.required, Validators.email]],
-      telefono: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]], // 10 dígitos
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', Validators.required],
-    },
-    {
-      validator: this.matchPasswords('password', 'confirmPassword')
-    });
+    private navCtrl: NavController,
+    private readonly registerService: RegisterService,
+
+  ) {}
+
+  ngOnInit() {
+    this.initForm();
   }
 
-  ngOnInit() {}
+  initForm(){
+    this.registerForm = this.fb.group({
+      idPersonas: [''],
+      identificacion: [''],
+      nombres: [''],
+      apellidos: [''],
+      numeroCelular: [''],
+      correoElectronico: [''],
+      direccion: [''],
+      sexo:[''],
+      usuarioForm: this.fb.group({
+        idUsuario: [''],
+        idPersonas: [''],
+        idRol: [2],
+        nombreUsuario: [''],
+        clave: ['', [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+        ]],
+        esActivo: [1]
+      })
+    })
+  }
 
   // Getter para facilitar el acceso a los controles del formulario
   get f() {
@@ -58,29 +76,75 @@ export class RegisterPage implements OnInit {
 
   // Método para manejar el registro
   async register() {
-    if (this.registerForm.invalid) {
-      return;
-    }
+    if (this.registerForm.invalid) return;
 
-    const { nombre, apellido, correo, telefono, password } = this.registerForm.value;
+    const Formulario = this.registerForm.getRawValue();
+    const DatosPersona: SetPersonasCommand = {
+      idPersonas: Formulario.idPersonas,
+      identificacion: Formulario.identificacion,
+      nombres: Formulario.nombres,
+      apellidos: Formulario.apellidos,
+      numeroCelular: Formulario.numeroCelular,
+      correoElectronico: Formulario.correoElectronico,
+      direccion: Formulario.direccion,
+      sexo: Formulario.sexo,
+    };
 
-    // Simular lógica de registro (se puede reemplazar con lógica de API)
-    console.log('Registro exitoso:', { nombre, apellido, correo, telefono, password });
+    this.registerService.setPersona(DatosPersona).subscribe({
+      next: (personaResponse) => {
+        if (personaResponse.data.isSuccess) {
+          const createdPersona = personaResponse.data.data;
+          const DatosUsuario: SetUsuarioCommand = {
+            idPersonas: createdPersona.idPersonas,
+            idRol: Formulario.usuarioForm.idRol,
+            nombreUsuario: Formulario.usuarioForm.nombreUsuario,
+            clave: Formulario.usuarioForm.clave,
+          };
 
-    // Mostrar alerta de confirmación
-    const alert = await this.alertController.create({
-      header: 'Registro Exitoso',
-      message: `¡Bienvenido/a, ${nombre} ${apellido}! Tu cuenta ha sido creada exitosamente.`,
-      buttons: [
-        {
-          text: 'Iniciar Sesión',
-          handler: () => {
-            this.navCtrl.navigateRoot('/login'); // Navegar al login
-          },
-        },
-      ],
+          this.registerService.setUsuario(DatosUsuario).subscribe({
+            next: async (UsuarioResponse) => {
+              if (UsuarioResponse.data.isSuccess) {
+                const toast = await this.toastController.create({
+                  message: 'Usuario registrado correctamente',
+                  duration: 2000,
+                  color: 'success',
+                  position: 'bottom'
+                });
+                await toast.present();
+
+                const alert = await this.alertController.create({
+                  header: 'Registro Exitoso',
+                  message: `¡Bienvenido/a, ${Formulario.nombres} ${Formulario.apellidos}! Tu cuenta ha sido creada exitosamente.`,
+                  buttons: [{
+                    text: 'Iniciar Sesión',
+                    handler: () => {
+                      this.navCtrl.navigateRoot('/login');
+                    }
+                  }]
+                });
+                await alert.present();
+              } else {
+                const toast = await this.toastController.create({
+                  message: UsuarioResponse.data.message || 'Error al registrar usuario',
+                  duration: 2000,
+                  color: 'danger',
+                  position: 'bottom'
+                });
+                await toast.present();
+              }
+            },
+            error: async (error) => {
+              const toast = await this.toastController.create({
+                message: error.message || 'Error inesperado',
+                duration: 2000,
+                color: 'danger',
+                position: 'bottom'
+              });
+              await toast.present();
+            }
+          });
+        }
+      }
     });
-
-    await alert.present();
-  }
+   }
 }

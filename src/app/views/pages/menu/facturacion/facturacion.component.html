@@ -1,0 +1,49 @@
+
+<!-- Mantén tu HTML existente y añade esto al final -->
+<div class="factura-container" *ngIf="mostrarFactura && factura">
+  <div class="factura" id="factura-imprimir">
+    <h2>FACTURA</h2>
+    <div class="factura-header">
+      <p><strong>Nº Factura:</strong> {{factura.numeroFactura}}</p>
+      <p><strong>Fecha:</strong> {{factura.fecha | date:'dd/MM/yyyy HH:mm'}}</p>
+    </div>
+
+    <div class="cliente-info">
+      <h3>Datos del Cliente</h3>
+      <p><strong>Nombre:</strong> {{factura.cliente.nombre}}</p>
+      <p><strong>Email:</strong> {{factura.cliente.email}}</p>
+    </div>
+
+    <div class="items">
+      <h3>Detalle de Compra</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of factura.items">
+            <td>{{item.nombre}}</td>
+            <td>${{item.precio}}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td><strong>Total</strong></td>
+            <td><strong>${{factura.total}}</strong></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="metodo-pago">
+      <p><strong>Método de Pago:</strong> {{factura.metodoPago}}</p>
+    </div>
+  </div>
+
+  <ion-button expand="block" (click)="imprimirFactura()">
+    Imprimir Factura
+  </ion-button>
+</div>

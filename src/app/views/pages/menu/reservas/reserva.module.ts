@@ -1,15 +1,16 @@
+import { Reserva } from './../../../../models/entities/Entidades';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { Tab2Page } from './tab2/tab2.page';
+import { Tab2Page } from './reservas/reserva.page';
 
 @NgModule({
   declarations: [
     AppComponent,
-    Tab2Page
+    ReservaPage
   ],
   imports: [
     BrowserModule,

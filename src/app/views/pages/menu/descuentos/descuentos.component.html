@@ -1,14 +1,15 @@
 <!-- tab4.component.html -->
 <ion-header>
   <ion-toolbar>
-    <ion-title class="ion-text-center">Promociones y Descuentos</ion-title>
+    <img src="assets/logo.png" alt="Logo BM" class="w-24 h-24 mL-4 rounded-full object-cover" />
+    <h1 class="menu-text"> PROMOCIONES Y DESCUENTOS</h1>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <!-- Zonas de Promociones -->
   <div class="zones-container">
-    <ion-card (click)="mostrarZona('postres')" [ngClass]="{'selected': zonaSeleccionada === 'postres'}" 
+    <ion-card (click)="mostrarZona('postres')" [ngClass]="{'selected': zonaSeleccionada === 'postres'}"
               style="position: relative; height: 200px; margin-bottom: 16px; background: url('assets/postres.jpg') center/cover;">
       <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5);"></div>
       <ion-card-header>
@@ -40,7 +41,7 @@ Promociones especiales para gamers
             <ion-card-title>{{ promocion.titulo }}</ion-card-title>
             <ion-card-subtitle>{{ promocion.descuento }}</ion-card-subtitle>
           </ion-card-header>
-          
+
           <ion-card-content>
             <p>{{ promocion.descripcion }}</p>
             <p class="vigencia">Válido hasta: {{ promocion.vigencia }}</p>

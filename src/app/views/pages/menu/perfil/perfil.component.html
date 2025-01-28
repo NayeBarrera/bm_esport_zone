@@ -3,8 +3,8 @@
   <ion-toolbar>
     <ion-title>
       <div class="profile-header">
-        <img src="assets/logo.png" alt="Logo BM" class="w-24 h-24 mx-auto mb-4 rounded-full object-cover" />
-        <span class="version">Versión 1</span>
+        <img src="assets/logo.png" alt="Logo BM" class="w-24 h-24 mL-4 rounded-full object-cover" />
+         <h1 class="menu-text">Version 1.0</h1>
       </div>
     </ion-title>
   </ion-toolbar>
@@ -89,32 +89,36 @@
           ></ion-input>
         </ion-item>
 
-        <div class="social-login">
-          <h4>Conectar con redes sociales</h4>
-          <ion-button expand="block" color="primary">
-            <ion-icon name="logo-google" slot="start"></ion-icon>
-            Conectar con Google
-          </ion-button>
-          <ion-button expand="block" color="facebook">
-            <ion-icon name="logo-facebook" slot="start"></ion-icon>
-            Conectar con Facebook
-          </ion-button>
-        </div>
+        <!-- Botones de redes sociales -->
+        <!-- Botones de redes sociales -->
+<div class="social-login">
+  <h4>Conectar con redes sociales</h4>
+  <ion-button expand="block" class="ion-color-lilac">
+    <ion-icon name="logo-google" slot="start"></ion-icon>
+    Conectar con Google
+  </ion-button>
+  <ion-button expand="block" class="ion-color-lilac">
+    <ion-icon name="logo-facebook" slot="start"></ion-icon>
+    Conectar con Facebook
+  </ion-button>
+</div>
 
-        <div class="danger-zone">
-          <ion-button color="danger" expand="block" (click)="eliminarCuenta()">
-            Eliminar cuenta
-          </ion-button>
-        </div>
+<!-- Botón eliminar cuenta -->
+<div class="danger-zone">
+  <ion-button expand="block" class="ion-color-lilac" (click)="eliminarCuenta()">
+    Eliminar cuenta
+  </ion-button>
+</div>
 
-        <div class="action-buttons">
-          <ion-button color="medium" (click)="cancelarEdicion()">
-            Cancelar
-          </ion-button>
-          <ion-button color="primary" (click)="guardarCambios()">
-            Guardar cambios
-          </ion-button>
-        </div>
+<!-- Botones de acción -->
+<div class="action-buttons">
+  <ion-button class="ion-color-lilac" (click)="cancelarEdicion()">
+    Cancelar
+  </ion-button>
+  <ion-button class="ion-color-lilac" (click)="guardarCambios()">
+    Guardar cambios
+  </ion-button>
+</div>
       </ion-list>
     </form>
   </div>

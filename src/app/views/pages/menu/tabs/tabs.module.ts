@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { TabsPageRoutingModule } from './tabs-routing.module';
 import { TabsPage } from './tabs.page';
-import { Tab1Page } from '../tab1/tab1.page';
-import { Tab2Page } from '../tab2/tab2.page';
-import { Tab3Page } from '../tab3/tab3.page';
-import { Tab4Component } from '../tab4/tab4.component';
-import { Tab5Component } from '../tab5/tab5.component';
+import { Tab1Page } from '../informacion/informacion.page';
+import { Tab2Page } from '../reservas/reserva.page';
+import { Tab3Page } from '../home/home.page';
+import { Tab4Component } from '../descuentos/descuentos.component';
+import { Tab5Component } from '../perfil/perfil.component';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
 
 @NgModule({

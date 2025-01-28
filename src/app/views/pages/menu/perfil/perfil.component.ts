@@ -11,8 +11,8 @@ interface Usuario {
 
 @Component({
   selector: 'app-tab5',
-  templateUrl: './tab5.component.html',
-  styleUrls: ['./tab5.component.scss']
+  templateUrl: './perfil.component.html',
+  styleUrls: ['./perfil.component.scss']
 })
 export class Tab5Component implements OnInit {
   usuario: Usuario = {

@@ -12,8 +12,8 @@ interface Promocion {
 
 @Component({
   selector: 'app-tab4',
-  templateUrl: './tab4.component.html',
-  styleUrls: ['./tab4.component.scss']
+  templateUrl: './facturacion.component.html',
+  styleUrls: ['./facturacion.component.scss']
 })
 export class Tab4Component implements OnInit {
   zonaSeleccionada: string = '';
@@ -56,8 +56,8 @@ export class Tab4Component implements OnInit {
   }
 
   getPromocionesActivas(): Promocion[] {
-    return this.zonaSeleccionada === 'postres' 
-      ? this.promocionesPostres 
+    return this.zonaSeleccionada === 'postres'
+      ? this.promocionesPostres
       : this.promocionesGaming;
   }
 }

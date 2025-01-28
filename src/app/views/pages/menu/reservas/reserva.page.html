@@ -1,7 +1,9 @@
 <!-- tab2.page.html -->
 <ion-header>
   <ion-toolbar>
-    <ion-title>Reservar PC</ion-title>
+    <img src="assets/logo.png" alt="Logo BM" class="w-24 h-24 mL-4 rounded-full object-cover" />
+    <h1 class="menu-text">RESERVAS</h1>
+
     <ion-buttons slot="start" *ngIf="currentScreen > 1">
       <ion-button (click)="goBack()">
         <ion-icon name="arrow-back"></ion-icon>
@@ -34,7 +36,7 @@
   <!-- Pantalla 2: Calendario -->
   <div *ngIf="currentScreen === 2" class="calendar-container ion-padding">
     <h2>Selecciona una fecha</h2>
-    
+
     <div class="calendar-header">
       <ion-button fill="clear" (click)="changeMonth(-1)">
         <ion-icon name="chevron-back"></ion-icon>
@@ -53,8 +55,8 @@
       </ion-row>
 
       <ion-row *ngFor="let week of weeks">
-        <ion-col size="1.7" 
-                 *ngFor="let day of week" 
+        <ion-col size="1.7"
+                 *ngFor="let day of week"
                  [class.selected]="selectedDate === day.date"
                  [class.disabled]="!isValidDate(day.date)"
                  (click)="handleDateSelect(day.date)">
@@ -87,7 +89,7 @@
         <p><strong>Hora:</strong> {{selectedTime}}</p>
       </ion-card-content>
     </ion-card>
-    <ion-button expand="block" 
+    <ion-button expand="block"
               style="--background: #9370DB;"
               (click)="confirmReservation()">
     CONFIRMAR RESERVA

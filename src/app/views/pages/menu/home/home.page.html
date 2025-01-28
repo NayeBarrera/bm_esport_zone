@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <img src="assets/logo.png" alt="Logo BM" class="w-24 h-24 mL-4 rounded-full object-cover" />
+    <h1 class="menu-text">MENU</h1>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="menu-container">
+    <!-- Grid de productos -->
+    <ion-grid>
+      <ion-row>
+        <ion-col size="6" *ngFor="let postre of postres">
+          <ion-card>
+            <img [src]="postre.imagen" alt="{{postre.nombre}}"/>
+            <ion-card-header>
+              <ion-card-title>{{postre.nombre}}</ion-card-title>
+              <ion-card-subtitle>{{postre.descripcion}}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <div class="precio-container">
+                <span class="precio">${{postre.precio}}</span>
+                <ion-button fill="clear" (click)="agregarAlCarrito(postre)">
+                  <ion-icon name="add"></ion-icon>
+                </ion-button>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- Footer con carrito -->
+  <ion-footer class="carrito-footer" *ngIf="carrito.length > 0">
+    <ion-toolbar>
+      <ion-row>
+        <ion-col size="8">
+          <p>Total: ${{calcularTotal()}}</p>
+        </ion-col>
+        <ion-col size="4">
+          <ion-button expand="block" (click)="irAResumen()">
+            Pagar
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>

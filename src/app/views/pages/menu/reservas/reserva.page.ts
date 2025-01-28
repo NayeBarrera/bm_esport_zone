@@ -13,8 +13,8 @@ interface CalendarDay {
 
 @Component({
   selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss']
+  templateUrl: 'reserva.page.html',
+  styleUrls: ['reserva.page.scss']
 })
 export class Tab2Page implements OnInit {
   currentScreen = 1;
@@ -22,15 +22,15 @@ export class Tab2Page implements OnInit {
     id: `PC${i + 1}`,
     reserved: Math.random() > 0.7
   }));
-  
+
   selectedPC: string | null = null;
   selectedDate: Date | null = null;
   selectedTime: string | null = null;
-  
+
   currentMonth: Date = new Date();
   weeks: CalendarDay[][] = [];
   daysOfWeek = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
-  
+
   timeSlots = Array(10).fill(null).map((_, i) => ({
     time: `${String(i + 9).padStart(2, '0')}:00 - ${String(i + 10).padStart(2, '0')}:00`,
     available: true
@@ -55,7 +55,7 @@ export class Tab2Page implements OnInit {
     );
     const weeks: CalendarDay[][] = [];
     let currentWeek: CalendarDay[] = [];
-    
+
     // Fill in empty days at start
     for (let i = 0; i < firstDay.getDay(); i++) {
       currentWeek.push({ date: null });
@@ -123,7 +123,7 @@ export class Tab2Page implements OnInit {
                         cssClass: 'custom-alert'
                       });
                       await toast.present();
-            
+
                       // Esperamos 2 segundos antes de resetear
                       setTimeout(() => {
                         this.currentScreen = 1;
