@@ -9,6 +9,7 @@ import { Tab3Page } from '../home/home.page';
 import { Tab4Component } from '../descuentos/descuentos.component';
 import { Tab5Component } from '../perfil/perfil.component';
 import { ExploreContainerComponent } from '../explore-container/explore-container.component';
+import { CartPage } from '../cart/cart.page';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { ExploreContainerComponent } from '../explore-container/explore-containe
     Tab3Page,
     Tab4Component,
     Tab5Component,
+    CartPage,
     ExploreContainerComponent
   ]
 })

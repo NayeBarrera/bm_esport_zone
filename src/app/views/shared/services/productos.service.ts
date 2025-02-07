@@ -8,17 +8,22 @@ import { RutasBackend } from 'src/app/infraestructure/helpers/RutasBackend';
 @Injectable({
   providedIn: 'root'
 })
-
 export class ProductosService {
-  constructor (
+  constructor(
     private readonly axiosInstance: AxiosService,
   ) {}
 
-  getProdcutos(){
-    return from (this.axiosInstance.getJsonInstance().get<ResponseBackend<Producto[]>>(RutasBackend.Producto.getproducto))
+  // Obtener productos
+  getProdcutos() {
+    return from(this.axiosInstance.getJsonInstance().get<ResponseBackend<Producto[]>>(RutasBackend.Producto.getproducto));
   }
 
-  setProductos(newProducto: ProductosCommand){
-    return from (this.axiosInstance.getJsonInstance().post<ResponseBackend<Producto[]>>(RutasBackend.Producto.getproducto,newProducto))
+  // Crear un nuevo producto
+  setProductos(newProducto: ProductosCommand) {
+    return from(this.axiosInstance.getJsonInstance().post<ResponseBackend<Producto[]>>(RutasBackend.Producto.getproducto, newProducto));
+  }
+
+  actualizarStock(Stock: ProductosCommand){
+    return from(this.axiosInstance.getJsonInstance().post<ResponseBackend<Producto[]>>(RutasBackend.Producto.setproducto, Stock));
   }
 }

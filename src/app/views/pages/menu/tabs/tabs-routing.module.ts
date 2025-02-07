@@ -6,6 +6,7 @@ import { Tab2Page } from '../reservas/reserva.page';
 import { Tab3Page } from '../home/home.page';
 import { Tab4Component } from '../descuentos/descuentos.component';
 import { Tab5Component } from '../perfil/perfil.component';
+import { CartPage } from '../cart/cart.page';
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
       {
         path: 'tab5',
         component: Tab5Component
+      },
+      {
+        path: 'cart',
+        component: CartPage
       },
       {
         path: '',

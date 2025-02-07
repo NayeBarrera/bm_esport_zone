@@ -1,27 +1,41 @@
+<!-- home.page.html -->
 <ion-header>
   <ion-toolbar>
-    <img src="assets/logo.png" alt="Logo BM" class="w-24 h-24 mL-4 rounded-full object-cover" />
+    <img src="assets/logo.png" alt="Logo BM" class="w-12 h-12 mL-4 rounded-full object-cover" />
     <h1 class="menu-text">MENU</h1>
+    <ion-buttons slot="end">
+      <ion-button (click)="irACarrito()">
+        <ion-icon name="cart-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="menu-container">
-    <!-- Grid de productos -->
     <ion-grid>
       <ion-row>
-        <ion-col size="6" *ngFor="let postre of postres">
+        <ion-col size="6" *ngFor="let p of productos">
           <ion-card>
-            <img [src]="postre.imagen" alt="{{postre.nombre}}"/>
+            <img [src]="getImageUrl(p.idAdjuntosNavigation?.ruta)" [alt]="p.nombreProdcuto" />
             <ion-card-header>
-              <ion-card-title>{{postre.nombre}}</ion-card-title>
-              <ion-card-subtitle>{{postre.descripcion}}</ion-card-subtitle>
+              <ion-card-title>{{p.nombreProdcuto}}</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-              <div class="precio-container">
-                <span class="precio">${{postre.precio}}</span>
-                <ion-button fill="clear" (click)="agregarAlCarrito(postre)">
-                  <ion-icon name="add"></ion-icon>
+              <div class="producto-info">
+                <div class="precio-stock">
+                  <span class="precio">${{p.precio}}</span>
+                  <span class="stock" [class.agotado]="!p.stock || p.stock <= 0">
+                    Stock: {{p.stock}}
+                  </span>
+                </div>
+                <ion-button
+                  expand="block"
+                  (click)="agregarAlCarrito(p)"
+                  [disabled]="!p.stock || p.stock <= 0"
+                  class="agregar-btn">
+                  <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+                  Agregar
                 </ion-button>
               </div>
             </ion-card-content>
@@ -30,20 +44,4 @@
       </ion-row>
     </ion-grid>
   </div>
-
-  <!-- Footer con carrito -->
-  <ion-footer class="carrito-footer" *ngIf="carrito.length > 0">
-    <ion-toolbar>
-      <ion-row>
-        <ion-col size="8">
-          <p>Total: ${{calcularTotal()}}</p>
-        </ion-col>
-        <ion-col size="4">
-          <ion-button expand="block" (click)="irAResumen()">
-            Pagar
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-toolbar>
-  </ion-footer>
 </ion-content>

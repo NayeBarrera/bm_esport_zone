@@ -1,171 +1,116 @@
+import { Producto } from './../../../../models/entities/Entidades';
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
-import { Persona, Producto } from 'src/app/models/entities/Entidades';
-import { personasService } from 'src/app/views/shared/services/personas.service';
+import { NavController, ToastController } from '@ionic/angular';
+import { environment } from 'src/environments/environment';
 import { ProductosService } from 'src/app/views/shared/services/productos.service';
-
-interface Postre {
-  id: number;
-  nombre: string;
-  descripcion: string;
-  precio: number;
-  imagen: string;
-}
-
-interface Factura {
-  numeroFactura: string;
-  fecha: Date;
-  cliente: {
-    nombre: string;
-    email: string;
-  };
-  items: any[];
-  total: number;
-  metodoPago: string;
-}
+import { CartService } from 'src/app/views/shared/services/cart.service';
+import { Subscription } from 'rxjs';
+import { EventService } from 'src/app/views/shared/services/event.service';
 
 @Component({
   selector: 'app-tab3',
-  templateUrl: 'home.page.html',//tab3.page.html',
+  templateUrl: 'home.page.html',
   styleUrls: ['./home.page.scss'],
 })
 export class Tab3Page implements OnInit {
-  postres: Postre[] = [
-    {
-      id: 1,
-      nombre: 'Cheesecake de Fresa',
-      descripcion: 'Tarta de queso con fresa',
-      precio: 5.99,
-      imagen: 'assets/Cheesecake_fresa.jpg'
-    },
-    {
-      id: 2,
-      nombre: 'Cheesecake de Mora',
-      descripcion: 'Tarta de queso con mora',
-      precio: 4.50,
-      imagen: 'assets/Cheesecake_mora.jpg'
-    },
-    {
-      id: 3,
-      nombre: 'Cheesecake de Oreo',
-      descripcion: 'Tarta de queso con galleta oreo',
-      precio: 3.75,
-      imagen: 'assets/Cheesecake_Oreo.jpg'
-    },
-    {
-      id: 4,
-      nombre: 'Mouse de Maracuya',
-      descripcion: 'Tarta de queso cn mora',
-      precio: 5.50,
-      imagen: 'assets/Mouse_Maracuya.jpg'
-    },
-    {
-      id: 5,
-      nombre: 'Flan de Vainilla',
-      descripcion: 'Suave y cremoso flan tradicional con caramelo líquido',
-      precio: 2.50,
-      imagen: 'assets/Flan_Vainilla.jpg'
-    },
-    {
-      id: 6,
-      nombre: 'Mouse de Chocolate',
-      descripcion: 'Suave mousse de chocolate negro decorado con virutas',
-      precio: 6.99,
-      imagen: 'assets/Mousse_chocolate.jpg'
-    },
-    {
-      id: 7,
-      nombre: 'Gelatina Mosaico',
-      descripcion: 'Colorida gelatina de varios sabores con leche condensada',
-      precio: 6.99,
-      imagen: 'assets/Gelatina_mosaico.jpg'
-    }
-  ];
+  rutacompleta = environment.baseUrl;
+  defaultImageUrl = 'assets/logo.png';
   productos: Producto[] = [];
-  // personas: Persona [] = [];
-  carrito: Postre[] = [];
-  factura: Factura | null = null;
-  mostrarFactura = false;
-  clienteNombre = '';
-  clienteEmail = '';
-  metodoPago = '';
-  fechaPedido: Date = new Date();
-  codigoPedido = '';
-  mostrarCheckout = false;
-  mostrarConfirmacion = false;
+  private subscription: Subscription;
 
   constructor(
     private navCtrl: NavController,
     private readonly productosservices: ProductosService,
-    // private readonly personasService: personasServicex
-  ) {}
+    private cartService: CartService,
+    private toastController: ToastController,
+    private eventService: EventService
+  ) {
+    this.subscription = this.eventService.reloadProducts$.subscribe(() => {
+      this.cargarproductos();
+    });
+  }
 
   ngOnInit() {
     this.cargarproductos();
-    // this.cargarPersonas();
+  }
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 
-  // cargarPersonas(){
-  //   this.personasService.getPersona().subscribe({
-  //   next: (response) => {
-  //     this.personas = response.data.data;
-  //     console.log("Personas",this.personas)
-  //   },
-  //   error: (error) => console.error('Error al cargar Personas:', error)
-  // });
-  // }
 
-  cargarproductos(){
+  getImageUrl(rutaAdjunto: string | undefined | null): string {
+    if (!rutaAdjunto) {
+      return this.defaultImageUrl;
+    }
+    return `${this.rutacompleta}/${rutaAdjunto}`;
+  }
+
+  cargarproductos() {
     this.productosservices.getProdcutos().subscribe({
       next: (response) => {
         this.productos = response.data.data;
-        console.log("Prodcutos",this.productos)
+        console.log("Productos", this.productos);
       },
       error: (error) => console.error('Error al cargar productos:', error)
     });
   }
 
-  agregarAlCarrito(postre: Postre) {
-    this.carrito.push(postre);
-  }
+  async agregarAlCarrito(producto: Producto) {
+    if (producto.stock && producto.stock > 0) {
+      try {
+        // Primero actualizamos el stock en el backend
+        const stockCommand = {
+          idProductos: producto.idProductos,
+          nombreProdcuto: producto.nombreProdcuto,
+          precio: producto.precio,
+          stock: producto.stock - 1, // Reducimos el stock en 1
+          idAdjuntos: producto.idAdjuntos,
+          esActivo: producto.esActivo
+        };
 
-  calcularTotal(): number {
-    return this.carrito.reduce((total, item) => total + item.precio, 0);
-  }
+        this.productosservices.actualizarStock(stockCommand).subscribe({
+          next: async (response) => {
+            // Si la actualización del stock fue exitosa, agregamos al carrito
+            this.cartService.addToCart(producto, 1);
+            producto.stock!--; // Actualizamos el stock en la vista
 
-  irAResumen() {
-    this.navCtrl.navigateForward('/resumen', {
-      state: {
-        carrito: this.carrito,
-        total: this.calcularTotal()
+            // Mostramos mensaje de éxito
+            const toast = await this.toastController.create({
+              message: 'Producto agregado al carrito',
+              duration: 2000,
+              position: 'bottom',
+              color: 'success'
+            });
+            toast.present();
+          },
+          error: async (error) => {
+            console.error('Error al actualizar el stock:', error);
+            const toast = await this.toastController.create({
+              message: 'Error al agregar el producto',
+              duration: 2000,
+              position: 'bottom',
+              color: 'danger'
+            });
+            toast.present();
+          }
+        });
+      } catch (error) {
+        console.error('Error al procesar la solicitud:', error);
       }
-    });
+    } else {
+      const toast = await this.toastController.create({
+        message: 'No hay stock disponible',
+        duration: 2000,
+        position: 'bottom',
+        color: 'warning'
+      });
+      toast.present();
+    }
   }
 
-  generarFactura() {
-    this.factura = {
-      numeroFactura: 'FAC-' + Math.random().toString(36).substring(2, 8).toUpperCase(),
-      fecha: new Date(),
-      cliente: {
-        nombre: this.clienteNombre,
-        email: this.clienteEmail
-      },
-      items: this.carrito,
-      total: this.calcularTotal(),
-      metodoPago: this.metodoPago
-    };
-    this.mostrarFactura = true;
-  }
-
-  imprimirFactura() {
-    window.print();
-  }
-
-  confirmarPedido() {
-    this.fechaPedido = new Date();
-    this.codigoPedido = 'PED-' + Math.random().toString(36).substring(2, 8).toUpperCase();
-    this.mostrarCheckout = false;
-    this.mostrarConfirmacion = true;
-    this.generarFactura();
+  irACarrito() {
+    this.navCtrl.navigateForward('/tabs/cart');
   }
 }

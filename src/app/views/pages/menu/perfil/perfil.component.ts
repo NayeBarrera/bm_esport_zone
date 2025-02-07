@@ -16,10 +16,10 @@ interface Usuario {
 })
 export class Tab5Component implements OnInit {
   usuario: Usuario = {
-    nombre: 'Nayeli',
-    email: 'melaninayelo15@gmail.com',
-    telefono: '1234567890',
-    apellido: 'Apellido'
+    nombre: '',
+    email: '',
+    telefono: '',
+    apellido: ''
   };
 
   seccionActual: string = '';
