@@ -1,6 +1,6 @@
 # BM ESPORT ZONE
 
-APK:     PK
+APK: https://github.com/NayeBarrera/bm_esport_zone/blob/master/app-debug.apk
 
 Bienvenido a **BM ESPORT ZONE**, tu destino principal para disfrutar de los mejores eventos y actividades de esports. Aquí encontrarás todo lo que necesitas para vivir una experiencia única en el mundo de los videojuegos competitivos.
 ![image](https://github.com/user-attachments/assets/61800004-5d7e-48af-b0ad-83fe25e67486)
